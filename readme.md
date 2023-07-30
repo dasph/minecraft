@@ -4,9 +4,9 @@
 
 1. Setup a vanilla Minecraft installation
 2. Install `Fabric` mod loader:
-    - download the [universal jar installer](https://fabricmc.net/use/installer/) (avoid using Windows installer since it requiers a global `JRE` instance)
+    - download the [universal jar installer](https://fabricmc.net/use/installer/) (avoid using Windows installer since it requires a global `JRE` instance)
     - launch the mod loader using `JRE` that was installed by Minecraft:
-      - nagivate to your `Minecraft` installation
+      - navigate to your `Minecraft` installation
       - go to `./runtime/java-runtime-gamma/*os*/java-runtime-gamma/bin/`
       - open a terminal window in the same directory with the `Fabric` mod loader
       - use `java(.exe)` executable from the Minecraft folder to run `fabric-installer-*.jar`: \
