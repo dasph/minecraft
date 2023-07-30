@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  server:
+    image: itzg/minecraft-server
+    tty: true
+    stdin_open: true
+    environment:
+      EULA: true
+      GUI: false
+      VERSION: 1.20.1
+      TYPE: FABRIC
+      MAX_MEMORY: 8g
+      DIFFICULTY: hard
+      ALLOW_FLIGHT: true
+      MODS_FILE: /extras/.mods
+      SERVER_NAME: moonfall
+      MOTD: drew's tiktok house
+      ICON: https://i.imgur.com/EiYG8C4.png
+    volumes:
+      - ./data:/data
+      - ./extras:/extras
+
+  router:
+    image: itzg/mc-router
+    depends_on:
+      - server
+    ports:
+      - 25565:25565
+    command: --mapping=${HOST}=server:25565
+
+  backups:
+    image: itzg/mc-backup
+    environment:
+      RCON_HOST: server
+      BACKUP_INTERVAL: 3h
+      PRUNE_BACKUPS_DAYS: 2
+    volumes:
+      - ./data:/data:ro
+      - ./backups:/backups
