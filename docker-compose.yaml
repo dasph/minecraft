@@ -8,8 +8,9 @@ services:
     environment:
       EULA: true
       GUI: false
-      VERSION: 1.20.1
-      TYPE: FABRIC
+      VERSION: 1.19.2
+      FORGE_VERSION: 43.2.21
+      TYPE: FORGE
       MAX_MEMORY: 8g
       DIFFICULTY: hard
       ALLOW_FLIGHT: true
