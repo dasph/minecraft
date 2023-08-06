@@ -29,6 +29,14 @@ services:
       - 25565:25565
     command: --mapping=${HOST}=server:25565
 
+  restore:
+    image: itzg/mc-backup
+    restart: no
+    entrypoint: restore-tar-backup
+    volumes:
+      - ./data:/data
+      - ./backups:/backups:ro
+
   backups:
     image: itzg/mc-backup
     environment:
