@@ -1,14 +1,18 @@
-version: '3.8'
-
 services:
   server:
     image: itzg/minecraft-server
     tty: true
     stdin_open: true
+    restart: unless-stopped
+    depends_on:
+      restore:
+        condition: service_completed_successfully
     environment:
+      UID: '$UID'
+      GID: '$GID'
       EULA: true
       GUI: false
-      VERSION: 1.20.1
+      VERSION: 1.20.5
       TYPE: FABRIC
       MAX_MEMORY: 8g
       DIFFICULTY: hard
@@ -27,19 +31,28 @@ services:
       - server
     ports:
       - 25565:25565
+    restart: unless-stopped
     command: --mapping=${HOST}=server:25565
 
   restore:
     image: itzg/mc-backup
     restart: no
     entrypoint: restore-tar-backup
+    environment:
+      UID: '$UID'
+      GID: '$GID'
     volumes:
       - ./data:/data
       - ./backups:/backups:ro
 
   backups:
     image: itzg/mc-backup
+    depends_on:
+      server:
+        condition: service_healthy
+    restart: unless-stopped
     environment:
+      INITIAL_DELAY: 0
       RCON_HOST: server
       BACKUP_INTERVAL: 3h
       PRUNE_BACKUPS_DAYS: 2
